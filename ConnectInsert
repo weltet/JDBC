@@ -1,0 +1,53 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+//connecting java with oracle database
+
+public class Exam01 {
+	public static void InsertData() {
+		//Reflection
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");//Class.forName("package path");
+		}catch(Exception e) {
+			System.out.println("Failed to counstruct oracle driver instance.");
+			e.printStackTrace();//prints error massage.
+		}
+		
+		//oracle db login
+		try {
+			/* 
+			 * 1. connect to db
+			 * 2.construct shell
+			 * 3.
+			 */
+			
+			//Class.staticMethod(String);
+			Connection con = 
+					DriverManager.getConnection
+					//jdbc:oracle:thin:@ - fixed
+					//localhost:1521:XE - db location. query port : 1521
+					//"id","pw"
+					("jdbc:oracle:thin:@localhost:1521:XE","java07","java07");
+			Statement stat = con.createStatement();//java:statement == oracle:shell
+			
+			String sql = "insert into person values(1004,'person3','lee@naver.com','kor',5)";
+			int result = stat.executeUpdate(sql);
+			//executeQuery : for select. return resultSet.
+			//executeUpdate : for insert, delete, update. return integer of query lines. 
+			
+			if(result>0) {
+				System.out.println("success");
+			} else {
+				System.out.println("fail");
+			}
+			
+			con.commit();
+			con.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
