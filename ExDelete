@@ -1,0 +1,40 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Exam02 {
+	public static void main(String[] args) {
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");//Class.forName("package path");
+		}catch(Exception e) {
+			System.out.println("Failed to counstruct oracle driver instance.");
+			e.printStackTrace();//prints error massage.
+		}
+		
+		try {
+			
+			Connection con = 
+					DriverManager.getConnection
+					("jdbc:oracle:thin:@localhost:1521:XE","java07","java07");
+			Statement stat = con.createStatement();
+			
+			String sql = "delete from person where id=1001";
+			int result = stat.executeUpdate(sql);
+			
+			
+			if(result>0) {
+				System.out.println("o");
+			} else {
+				System.out.println("x");
+			}
+			
+			con.commit();
+			con.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
