@@ -1,0 +1,41 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class exe4 {
+	public static void main(String[] args) {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		}catch(Exception e) {
+			System.out.println("Failed to counstruct oracle driver instance.");
+			e.printStackTrace();
+		}
+		
+		try {
+			
+			Connection con = 
+					DriverManager.getConnection
+					("jdbc:oracle:thin:@localhost:1521:XE","java07","java07");
+			Statement stat = con.createStatement();
+			ResultSet rs = stat.executeQuery("select * from person");
+			
+			while(rs.next()) {
+			//next : check data and fetch a line of data.
+				//divide the fetched line
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				String email = rs.getString("email");
+				String address = rs.getString("address");
+				
+				System.out.printf("id %d, name : %s, address : %s, email : %s\n", id, name, email, address);
+				
+			}
+			
+			con.close();
+	}catch(Exception e) {
+		System.out.println("Failed to counstruct oracle driver instance.");
+		e.printStackTrace();
+		}
+	}
+}
