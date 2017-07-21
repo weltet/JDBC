@@ -1,0 +1,30 @@
+
+public class Main {
+	public static void main(String[] args) {
+		DBManager manager = new DBManager();
+		
+		Student std = new Student(0,"person8","lee@naver.com","kor",5);
+		int id=1008;
+		try {
+			int result = manager.insertData(std);
+			int resultD = manager.deleteData(id);
+			
+			if(result>0) {
+				System.out.println("success");
+			} else {
+				System.out.println("fail");
+			}
+			
+			if(resultD>0) {
+				System.out.println("o");
+			} else {
+				System.out.println("x");
+			}
+		
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
